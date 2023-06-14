@@ -1,36 +1,108 @@
 import { Button, Table, Modal, Input } from "antd";
 import { useState } from "react";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import {
+    EditOutlined,
+    DeleteOutlined,
+    DoubleRightOutlined,
+} from "@ant-design/icons";
 
 function App() {
-    const [isEditing, setIsEditing] = useState(false);
+    // const [isEditing, setIsEditing] = useState(false);
+    const [isvieWing, setIsViewing] = useState(false);
     const [editingStudent, setEditingStudent] = useState(null);
+    const [viwingProduct, setViwingProduct] = useState(null);
     const [dataSource, setDataSource] = useState([
         {
             id: 1,
-            name: "John",
-            email: "john@gmail.com",
-            address: "John Address",
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
         },
         {
             id: 2,
-            name: "David",
-            email: "david@gmail.com",
-            address: "David Address",
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
         },
         {
             id: 3,
-            name: "James",
-            email: "james@gmail.com",
-            address: "James Address",
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
         },
         {
             id: 4,
-            name: "Sam",
-            email: "sam@gmail.com",
-            address: "Sam Address",
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
+        },
+        {
+            id: 5,
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
+        },
+        {
+            id: 6,
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
+        },
+        {
+            id: 7,
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
+        },
+        {
+            id: 8,
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
+        },
+        {
+            id: 9,
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
+        },
+        {
+            id: 10,
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
+        },
+        {
+            id: 11,
+            name: "Mercedes",
+            description: "Mercedes Car",
+            price: "15000",
+            picture: "",
+            category: "Sedan",
         },
     ]);
+
     const columns = [
         {
             key: "1",
@@ -44,49 +116,65 @@ function App() {
         },
         {
             key: "3",
-            title: "Email",
-            dataIndex: "email",
+            title: "Description",
+            dataIndex: "description",
         },
         {
             key: "4",
-            title: "Address",
-            dataIndex: "address",
+            title: "Price",
+            dataIndex: "price",
         },
         {
             key: "5",
+            title: "Picture",
+            dataIndex: "picture",
+        },
+        {
+            key: "6",
+            title: "Category",
+            dataIndex: "category",
+        },
+        {
+            key: "7",
             title: "Actions",
             render: (record) => {
                 return (
-                    <>
-                        <EditOutlined
+                    <div className="flex text-slate-600">
+                        {/* <EditOutlined
                             onClick={() => {
                                 onEditStudent(record);
                             }}
-                        />
+                        /> */}
                         <DeleteOutlined
                             onClick={() => {
                                 onDeleteStudent(record);
                             }}
                             style={{ color: "red", marginLeft: 12 }}
                         />
-                    </>
+                        <DoubleRightOutlined
+                            className="ml-2"
+                            // onClick={() => {
+                            //     onProductView(record);
+                            // }}
+                            onClick={() => {
+                                onProductView(record);
+                            }}
+                        />
+                    </div>
                 );
             },
         },
     ];
 
-    const onAddStudent = () => {
-        const randomNumber = parseInt(Math.random() * 1000);
-        const newStudent = {
-            id: randomNumber,
-            name: "Name " + randomNumber,
-            email: randomNumber + "@gmail.com",
-            address: "Address " + randomNumber,
-        };
-        setDataSource((pre) => {
-            return [...pre, newStudent];
-        });
+    const onProductView = (record) => {
+        setIsViewing(true);
+        setViwingProduct({ ...record });
     };
+    const onCancelProductView = (record) => {
+        setIsViewing(false);
+        setViwingProduct(null);
+    };
+
     const onDeleteStudent = (record) => {
         Modal.confirm({
             title: "Are you sure, you want to delete this student record?",
@@ -108,62 +196,43 @@ function App() {
         setEditingStudent(null);
     };
     return (
-        <div className="App m-10 ">
-            <header className="App-header">
-                {/* <div className="flex  w-full justify-center items-center"> */}
-                <Button onClick={onAddStudent} className="">
-                    Add a new Student
-                </Button>
-                {/* </div> */}
+        <div className="App p-10 bg-stone-100 h-screen w-full flex flex-col justify-center">
+            <header className="App-header bg-white rounded-lg">
+                <Link to="/admin" className="w-full flex justify-center m-10">
+                    <Button className="">Go to Admin Panel</Button>
+                </Link>
                 <Table
+                    className="mt-10 p-10"
                     columns={columns}
                     dataSource={dataSource}
                     key={"columns.key"}
                 ></Table>
                 <Modal
                     title="Edit Student"
-                    visible={isEditing}
-                    okText="Save"
+                    open={isvieWing}
+                    okText="Ok"
+                    okButtonProps={{
+                        style: {
+                            // background: "blue",
+                            borderColor: "blue",
+                            color: "blue",
+                        },
+                    }}
                     onCancel={() => {
-                        resetEditing();
+                        onCancelProductView();
                     }}
                     onOk={() => {
-                        setDataSource((pre) => {
-                            return pre.map((student) => {
-                                if (student.id === editingStudent.id) {
-                                    return editingStudent;
-                                } else {
-                                    return student;
-                                }
-                            });
-                        });
-                        resetEditing();
+                        onCancelProductView();
                     }}
                 >
+                    <Input className="mb-1" value={viwingProduct?.name} />
                     <Input
-                        value={editingStudent?.name}
-                        onChange={(e) => {
-                            setEditingStudent((pre) => {
-                                return { ...pre, name: e.target.value };
-                            });
-                        }}
+                        className="mb-1"
+                        value={viwingProduct?.description}
                     />
-                    <Input
-                        value={editingStudent?.email}
-                        onChange={(e) => {
-                            setEditingStudent((pre) => {
-                                return { ...pre, email: e.target.value };
-                            });
-                        }}
-                    />
-                    <Input
-                        value={editingStudent?.address}
-                        onChange={(e) => {
-                            setEditingStudent((pre) => {
-                                return { ...pre, address: e.target.value };
-                            });
-                        }}
-                    />
+                    <Input className="mb-1" value={viwingProduct?.price} />
+                    <Input className="mb-1" value={viwingProduct?.picture} />
+                    <Input className="mb-1" value={viwingProduct?.category} />
                 </Modal>
             </header>
         </div>
